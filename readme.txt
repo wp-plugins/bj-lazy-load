@@ -52,3 +52,11 @@ Check your HTML source or see the magic at work in FireBug or similar.
 = Version 0.1 =
 * Released 2011-12-05
 * It works (or at least it does for me)
+
+== Upgrade Notice ==
+
+= 0.2 =
+Lazy load post thumbnails too and stays out of your feeds.
+
+
+
