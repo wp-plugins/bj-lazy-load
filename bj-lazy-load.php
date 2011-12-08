@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.2.1
+Version: 0.2.2
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -28,14 +28,22 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.2.1';
+	const version = '0.2.2';
 	private $_placeholder_url;
 
 	function __construct() {
 		
 		$this->_placeholder_url = plugins_url('/img/placeholder.gif', __FILE__);
 	
-		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		if (get_option('bjll_include_css', 1)) {
+			add_action('wp_print_styles', array($this, 'enqueue_styles'));
+		}
+		
+		if (get_option('bjll_include_js', 1)) {
+			add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		}
+		
+		add_action('wp_print_footer_scripts', array($this, 'output_js_options'));
 
 		add_action( 'wp_ajax_BJLL_get_images', array($this, 'get_images_json') );
 		add_action( 'wp_ajax_nopriv_BJLL_get_images', array($this, 'get_images_json') );
@@ -46,18 +54,22 @@ class BJLL {
 			add_filter( 'post_thumbnail_html', array($this, 'filter_post_thumbnail_html'), 10 );
 		}
 	}
+	
+	public function enqueue_styles() {
+		wp_enqueue_style( 'BJLL', plugins_url('/css/bjll.css', __FILE__), array(), self::version);
+	}
 
 	public function enqueue_scripts() {
-		/*
-		wp_enqueue_script('JAIL', plugins_url('/js/jail.min.js', __FILE__), array('jquery'), '0.9.7', true);
-		wp_enqueue_script( 'BJLL', plugins_url('/js/bjll.js', __FILE__), array( 'jquery', 'JAIL' ), self::version, true );
-		*/
+		
+		//wp_enqueue_script('JAIL', plugins_url('/js/jail.min.js', __FILE__), array('jquery'), '0.9.7', true);
+		//wp_enqueue_script( 'BJLL', plugins_url('/js/bjll.js', __FILE__), array( 'jquery', 'JAIL' ), self::version, true );
+		
 		wp_enqueue_script( 'BJLL', plugins_url('/js/bjll.min.js', __FILE__), array( 'jquery' ), self::version, true );
-		
-		/* We don't need this (yet)
-		wp_localize_script( 'BJLL', 'BJLL', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		*/
-		
+
+	} 
+	
+	public function output_js_options() {
+		/*
 		wp_localize_script( 'BJLL', 'BJLL', array(
 			'timeout' => get_option('bjll_timeout', 10),
 			'effect' => get_option('bjll_effect', 'fadeIn'),
@@ -69,7 +81,28 @@ class BJLL {
 			'offset' => get_option('bjll_offset', 200),
 			'ignoreHiddenImages' => get_option('bjll_ignoreHiddenImages', 0),
 		) );
-	} 
+		*/
+		?>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var BJLL = {
+	options: {
+		timeout: <?php echo intval(get_option('bjll_timeout', 10)); ?>,
+		effect: <?php echo (strlen($val = get_option('bjll_effect', '')) ? '"'.$val.'"' : 'null'); ?>,
+		speed: <?php echo intval(get_option('bjll_speed', 400)); ?>,
+		event: "<?php echo get_option('bjll_event', 'load+scroll'); ?>",
+		callback: "<?php echo get_option('bjll_callback', ''); ?>",
+		placeholder: "<?php echo get_option('bjll_placeholder', ''); ?>",
+		offset: <?php echo intval(get_option('bjll_offset', '')); ?>,
+		ignoreHiddenImages: <?php echo intval(get_option('bjll_ignoreHiddenImages', 0)); ?>
+
+	},
+	ajaxurl: "<?php echo admin_url( 'admin-ajax.php' ); ?>"
+};
+/* ]]> */
+</script>
+		<?php
+	}
 
 	public function get_images_json() {
 		echo json_encode($_POST['attachmentIDs']);
@@ -108,18 +141,24 @@ class BJLL {
 	protected function _get_placeholder_html ($html) {
 	
 		$orig_html = $html;
-			
+		
+		/**/
 		// replace the src and add the data-href attribute
 		$html = preg_replace( '/<img(.*?)src=/i', '<img$1src="'.$this->_placeholder_url.'" data-href=', $html );
 		
 		// add the lazy class to the img element
 		if (preg_match('/class="/i', $html)) {
-			$html = preg_replace('/class="(.*?)"/i', ' class="lazy $1"', $html);
+			$html = preg_replace('/class="(.*?)"/i', ' class="lazy lazy-hidden $1"', $html);
 		} else {
-			$html = preg_replace('/<img/i', '<img class="lazy"', $html);
+			$html = preg_replace('/<img/i', '<img class="lazy lazy-hidden"', $html);
 		}
 		
 		$html .= '<noscript>' . $orig_html . '</noscript>';
+		
+		
+		
+		// http://24ways.org/2011/adaptive-images-for-responsive-designs-again
+		//$html = "<script>document.write('<' + '!--')</script><noscript class=\"lazy-nojs\">" . $orig_html . '<noscript -->';
 	
 		return $html;
 	}
@@ -138,14 +177,15 @@ class BJLL_Admin {
 	}
 	
 	function register_settings() {
-		//register_setting( $option_group, $option_name, $sanitize_callback );
 		register_setting( 'bjll_options', 'bjll_filter_post_thumbnails', 'intval' );
+		register_setting( 'bjll_options', 'bjll_include_js', 'intval' );
+		register_setting( 'bjll_options', 'bjll_include_css', 'intval' );
 
-		//add_settings_section( $id, $title, $callback, $page );
 		add_settings_section('bjll_general', __('General'), array('BJLL_Admin','settings_section_general'), 'bjll');
 		
-		//add_settings_field( $id, $title, $callback, $page, $section, $args );
 		add_settings_field('bjll_filter_post_thumbnails', __('Lazy load post thumbnails'), array('BJLL_Admin', 'setting_field_filter_post_thumbnails'), 'bjll', 'bjll_general', array('label_for' => 'bjll_filter_post_thumbnails'));
+		add_settings_field('bjll_include_js', __('Include JS'), array('BJLL_Admin', 'setting_field_include_js'), 'bjll', 'bjll_general', array('label_for' => 'bjll_include_js'));
+		add_settings_field('bjll_include_css', __('Include CSS'), array('BJLL_Admin', 'setting_field_include_css'), 'bjll', 'bjll_general', array('label_for' => 'bjll_include_css'));
 	
 		register_setting( 'bjll_options', 'bjll_timeout', 'intval' );
 		register_setting( 'bjll_options', 'bjll_effect' );
@@ -200,14 +240,28 @@ class BJLL_Admin {
 	}
 	
 	function setting_field_filter_post_thumbnails() {
-
 		$checked = '';
 		if (intval(get_option('bjll_filter_post_thumbnails', 1))) {
 			$checked = ' checked="checked"';
 		}
 		
 		echo '<input id="bjll_filter_post_thumbnails" name="bjll_filter_post_thumbnails" type="checkbox" value="1" ' . $checked . ' />';
-
+	}
+	function setting_field_include_js() {
+		$checked = '';
+		if (intval(get_option('bjll_include_js', 1))) {
+			$checked = ' checked="checked"';
+		}
+		
+		echo '<input id="bjll_include_js" name="bjll_include_js" type="checkbox" value="1" ' . $checked . ' /> Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined JS</a>';
+	}
+	function setting_field_include_css() {
+		$checked = '';
+		if (intval(get_option('bjll_include_css', 1))) {
+			$checked = ' checked="checked"';
+		}
+		
+		echo '<input id="bjll_include_css" name="bjll_include_css" type="checkbox" value="1" ' . $checked . ' /> Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined CSS</a>';
 	}
 	function setting_field_ignoreHiddenImages() {
 
