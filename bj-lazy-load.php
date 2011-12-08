@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.2.2
+Version: 0.2.3
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -140,6 +140,53 @@ var BJLL = {
 	
 	protected function _get_placeholder_html ($html) {
 	
+		if (class_exists('DOMDocument')) {
+			$html = $this->_get_placeholder_html_dom($html);
+		} else {
+			$html = $this->_get_placeholder_html_regexp($html);
+		}
+	
+		return $html;
+	}
+	
+	protected function _get_placeholder_html_dom ($html) {
+	
+		$doc = DOMDocument::loadHTML($html);
+		if (!$doc) {
+			return $this->_get_placeholder_html_regexp($html);
+		}
+		
+		$images = $doc->getElementsByTagName('img');
+		
+		$img = $images->item(0);
+		
+		//foreach ($images as $img) {
+		
+			$noscriptImg = $img->cloneNode(true);
+			$noscript = $doc->createElement('noscript');
+			$noscript->appendChild($noscriptImg);
+		
+			$src = $img->getAttribute('src');
+			$class = $img->getAttribute('class');
+			
+			$class .= ' lazy lazy-hidden';
+			
+			$img->setAttribute( 'data-href' , $src );
+			$img->setAttribute( 'src' , $this->_placeholder_url );
+			$img->setAttribute( 'class' , trim($class) );
+			
+			$img->parentNode->appendChild($noscript);
+			
+		//}
+	
+		$rethtml = $doc->saveHTML();
+		
+		$rethtml = substr($rethtml, strpos($rethtml, '<body>') + 6);
+		$rethtml = substr($rethtml, 0, strpos($rethtml, '</body>'));
+	
+		return $rethtml;
+	}
+	protected function _get_placeholder_html_regexp ($html) {
 		$orig_html = $html;
 		
 		/**/
@@ -158,6 +205,7 @@ var BJLL = {
 		
 		
 		// http://24ways.org/2011/adaptive-images-for-responsive-designs-again
+		// This is a no-go. <img> within <noscript> within <a> gets parsed horribly wrong
 		//$html = "<script>document.write('<' + '!--')</script><noscript class=\"lazy-nojs\">" . $orig_html . '<noscript -->';
 	
 		return $html;

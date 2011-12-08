@@ -46,6 +46,9 @@ Check your HTML source or see the magic at work in FireBug or similar.
 
 == Changelog ==
 
+= Version 0.2.3 =
+* Now using DOMDocument for better HTML parsing. Old regexp parsing as fallback if DOMDocument is not available.
+
 = Version 0.2.2 =
 * Added CSS. No longer need for hiding .no-js .lazy
 * Added options whether to include JS and CSS or not
