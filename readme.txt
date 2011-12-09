@@ -5,7 +5,7 @@ Tags: images, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.2
 Tested up to: 3.3
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
 Lazy image loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users.
 
@@ -68,6 +68,9 @@ Check your HTML source or see the magic at work in FireBug or similar.
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.2.3 =
+Improved image replacement
 
 = 0.2.2 =
 More options and improved non-JS display.

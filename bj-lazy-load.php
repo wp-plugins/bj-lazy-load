@@ -28,7 +28,7 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.2.2';
+	const version = '0.2.3';
 	private $_placeholder_url;
 
 	function __construct() {
