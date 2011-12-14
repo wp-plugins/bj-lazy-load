@@ -231,9 +231,9 @@ class BJLL_Admin {
 
 		add_settings_section( 'bjll_general', __('General'), array( 'BJLL_Admin', 'settings_section_general' ), 'bjll' );
 		
-		add_settings_field( 'bjll_filter_post_thumbnails', __( 'Lazy load post thumbnails' ), array( 'BJLL_Admin', 'setting_field_filter_post_thumbnails' ), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_filter_post_thumbnails' ) );
-		add_settings_field( 'bjll_include_js', __( 'Include JS' ), array( 'BJLL_Admin', 'setting_field_include_js'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_js' ) );
-		add_settings_field( 'bjll_include_css', __( 'Include CSS' ), array( 'BJLL_Admin', 'setting_field_include_css'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_css' ) );
+		add_settings_field( 'bjll_filter_post_thumbnails', __( 'Lazy load post thumbnails', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_filter_post_thumbnails' ), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_filter_post_thumbnails' ) );
+		add_settings_field( 'bjll_include_js', __( 'Include JS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_js'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_js' ) );
+		add_settings_field( 'bjll_include_css', __( 'Include CSS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_css'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_css' ) );
 	
 		register_setting( 'bjll_options', 'bjll_timeout', 'intval' );
 		register_setting( 'bjll_options', 'bjll_effect' );
@@ -245,14 +245,14 @@ class BJLL_Admin {
 		register_setting( 'bjll_options', 'bjll_offset', 'intval' );
 		register_setting( 'bjll_options', 'bjll_ignoreHiddenImages', 'intval' );
 		
-		add_settings_section( 'bjll_loader', __( 'Loader' ), array( 'BJLL_Admin','settings_section_loader' ), 'bjll' );
+		add_settings_section( 'bjll_loader', __( 'JAIL Settings', 'bj-lazy-load' ), array( 'BJLL_Admin','settings_section_loader' ), 'bjll' );
 		
-		add_settings_field( 'bjll_timeout', __( 'Timeout' ), array( 'BJLL_Admin', 'setting_field_timeout' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_timeout' ) );
-		add_settings_field( 'bjll_effect', __( 'jQuery Effect' ), array('BJLL_Admin', 'setting_field_effect' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_effect' ) );
-		add_settings_field( 'bjll_speed', __( 'Effect Speed' ), array('BJLL_Admin', 'setting_field_speed' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_speed' ) );
-		add_settings_field( 'bjll_event', __( 'Trigger Event' ), array('BJLL_Admin', 'setting_field_event' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_event' ) );
-		add_settings_field( 'bjll_offset', __( 'Offset/Threshold' ), array('BJLL_Admin', 'setting_field_offset' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_offset' ) );
-		add_settings_field( 'bjll_ignoreHiddenImages', __( 'Ignore Hidden Images' ), array( 'BJLL_Admin', 'setting_field_ignoreHiddenImages' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_ignoreHiddenImages' ) );
+		add_settings_field( 'bjll_timeout', __( 'Timeout', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_timeout' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_timeout' ) );
+		add_settings_field( 'bjll_effect', __( 'jQuery Effect', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_effect' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_effect' ) );
+		add_settings_field( 'bjll_speed', __( 'Effect Speed', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_speed' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_speed' ) );
+		add_settings_field( 'bjll_event', __( 'Trigger Event', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_event' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_event' ) );
+		add_settings_field( 'bjll_offset', __( 'Offset/Threshold', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_offset' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_offset' ) );
+		add_settings_field( 'bjll_ignoreHiddenImages', __( 'Ignore Hidden Images', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_ignoreHiddenImages' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_ignoreHiddenImages' ) );
 		
 	}
 	
@@ -303,7 +303,7 @@ class BJLL_Admin {
 		}
 		
 		echo '<input id="bjll_include_js" name="bjll_include_js" type="checkbox" value="1" ' . $checked . ' /> ';
-		_e( 'Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined JS</a>' );
+		_e( 'Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined JS</a>', 'bj-lazy-load' );
 	}
 	
 	function setting_field_include_css () {
@@ -313,7 +313,7 @@ class BJLL_Admin {
 		}
 		
 		echo '<input id="bjll_include_css" name="bjll_include_css" type="checkbox" value="1" ' . $checked . ' /> '; 
-		_e( 'Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined CSS</a>' );
+		_e( 'Needed for the plugin to work, but <a href="http://developer.yahoo.com/performance/rules.html#num_http" target="_blank">for best performance you should include it in your combined CSS</a>' , 'bj-lazy-load');
 	}
 	function setting_field_ignoreHiddenImages () {
 
@@ -323,7 +323,7 @@ class BJLL_Admin {
 		}
 		
 		echo '<input id="bjll_ignoreHiddenImages" name="bjll_ignoreHiddenImages" type="checkbox" value="1" ' . $checked . ' /> ';
-		_e( 'Whether to ignore hidden images to be loaded - Default: false/unchecked (so hidden images are loaded)' );
+		_e( 'Whether to ignore hidden images to be loaded - Default: false/unchecked (so hidden images are loaded)', 'bj-lazy-load' );
 
 	}
 	function setting_field_event () {
@@ -341,12 +341,12 @@ class BJLL_Admin {
 			echo sprintf( '<option value="%1$s"%2$s>%1$s</option>', $option, $selected );
 		}
 		echo '</select> ';
-		_e( 'Event that triggers the image to load. Default: load+scroll' );
+		_e( 'Event that triggers the image to load. Default: load+scroll', 'bj-lazy-load' );
 	}
 	function setting_field_timeout () {
 		$val = get_option( 'bjll_timeout', 10 );
 		echo '<input id="bjll_timeout" name="bjll_timeout" type="text" value="' . $val . '" /> ';
-		_e( 'Number of msec after that the images will be loaded - Default: 10';
+		_e( 'Number of msec after that the images will be loaded - Default: 10', 'bj-lazy-load' );
 	}
 	function setting_field_effect () {
 		$val = get_option( 'bjll_effect', '' );
@@ -354,25 +354,25 @@ class BJLL_Admin {
 			$val = '';
 		}
 		echo '<input id="bjll_effect" name="bjll_effect" type="text" value="' . $val . '" />';
-		_e( 'Any jQuery effect that makes the images display (e.g. "fadeIn") - Default: NULL');
+		_e( 'Any jQuery effect that makes the images display (e.g. "fadeIn") - Default: NULL', 'bj-lazy-load');
 		echo '<p>';
-		_e( 'NOTE: If you are loading a large number of images, it is best to NOT use this setting. Effects calls are very expensive. Even a simple show() can have a major impact on the browser&rsquo;s responsiveness.' );
+		_e( 'NOTE: If you are loading a large number of images, it is best to NOT use this setting. Effects calls are very expensive. Even a simple show() can have a major impact on the browser&rsquo;s responsiveness.', 'bj-lazy-load' );
 		echo '</p>';
 	}
 	function setting_field_speed () {
 		$val = get_option( 'bjll_speed', 400 );
 		echo '<input id="bjll_speed" name="bjll_speed" type="text" value="' . $val . '" /> ';
-		_e( 'string or number determining how long the animation will run - Default: 400' );
+		_e( 'string or number determining how long the animation will run - Default: 400', 'bj-lazy-load' );
 	}
 	function setting_field_offset () {
 		$val = get_option( 'bjll_offset', 200 );
 		echo '<input id="bjll_offset" name="bjll_offset" type="text" value="' . $val . '" /> ';
-		_e( 'An offset of "500" would cause any images that are less than 500px below the bottom of the window or 500px above the top of the window to load. - Default: 200' );
+		_e( 'An offset of "500" would cause any images that are less than 500px below the bottom of the window or 500px above the top of the window to load. - Default: 200', 'bj-lazy-load' );
 	}
 
 	function plugin_options_page () {
 		if ( ! current_user_can( 'manage_options' ) )  {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'bj-lazy-load' ) );
 		}
 		?>
 		<div class="wrap">
