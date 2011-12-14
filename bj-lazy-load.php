@@ -219,6 +219,8 @@ class BJLL_Admin {
 		add_action( 'init', array( $this, 'load_i18n' ) );
 		add_action( 'admin_menu', array( $this, 'plugin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		
+		add_filter( 'plugin_action_links', array( $this, 'plugin_settings_link' ), 10, 2);
 	}
 	
 	function load_i18n() {;
@@ -228,6 +230,15 @@ class BJLL_Admin {
 	function plugin_menu () {
 		add_options_page( 'BJ Lazy Load', 'BJ Lazy Load', 'manage_options', 'bjll', array( $this, 'plugin_options_page' ) );
 	}
+	
+	public static function plugin_settings_link( $links, $file ) {
+		
+        if ( plugin_basename( __FILE__ ) == $file ) {
+			array_unshift($links, '<a href="' . admin_url( 'admin.php' ) . '?page=bjll">' . __( 'Settings' ) . '</a>');
+		}
+
+        return $links;
+    }
 	
 	function register_settings () {
 		register_setting( 'bjll_options', 'bjll_filter_post_thumbnails', 'intval' );
