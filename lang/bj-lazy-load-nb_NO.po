@@ -1,0 +1,100 @@
+# Copyright (C) 2010 BJ Lazy Load
+# This file is distributed under the same license as the BJ Lazy Load package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BJ Lazy Load 0.2.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/bj-lazy-load\n"
+"POT-Creation-Date: 2011-12-14 20:06:30+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-12-14 21:39+0100\n"
+"Last-Translator: Bjørn Johansen <bjorn@gandalf.no>\n"
+"Language-Team:  <post@bjornjohansen.no>\n"
+"X-Poedit-Language: Norwegian Bokmal\n"
+"X-Poedit-Country: NORWAY\n"
+
+#: bj-lazy-load.php:234
+msgid "Lazy load post thumbnails"
+msgstr "Lat lasting av fremhevede bilder"
+
+#: bj-lazy-load.php:235
+msgid "Include JS"
+msgstr "Inkludér JS"
+
+#: bj-lazy-load.php:236
+msgid "Include CSS"
+msgstr "Inkludér CSS"
+
+#: bj-lazy-load.php:248
+msgid "JAIL Settings"
+msgstr "JAIL-innstillinger"
+
+#: bj-lazy-load.php:250
+msgid "Timeout"
+msgstr "Tidsterskel"
+
+#: bj-lazy-load.php:251
+msgid "jQuery Effect"
+msgstr "jQuery-effekt"
+
+#: bj-lazy-load.php:252
+msgid "Effect Speed"
+msgstr "Effekthastighet"
+
+#: bj-lazy-load.php:253
+msgid "Trigger Event"
+msgstr "Handlingsutløser"
+
+#: bj-lazy-load.php:254
+msgid "Offset/Threshold"
+msgstr "Avstand/terskel"
+
+#: bj-lazy-load.php:255
+msgid "Ignore Hidden Images"
+msgstr "Ignorer skjulte bilder"
+
+#: bj-lazy-load.php:306
+msgid "Needed for the plugin to work, but <a href=\"http://developer.yahoo.com/performance/rules.html#num_http\" target=\"_blank\">for best performance you should include it in your combined JS</a>"
+msgstr "Nødvendig for at innstikket skal fungere, men <a href=\"http://developer.yahoo.com/performance/rules.html#num_http\" target=\"_blank\">for best ytelse bør du inkludere det i din kombinerte JS-fil</a>"
+
+#: bj-lazy-load.php:316
+msgid "Needed for the plugin to work, but <a href=\"http://developer.yahoo.com/performance/rules.html#num_http\" target=\"_blank\">for best performance you should include it in your combined CSS</a>"
+msgstr "Nødvendig for at innstikket skal fungere, men <a href=\"http://developer.yahoo.com/performance/rules.html#num_http\" target=\"_blank\">for best ytelse bør du inkludere det i din kombinerte CSS-fil</a>"
+
+#: bj-lazy-load.php:326
+msgid "Whether to ignore hidden images to be loaded - Default: false/unchecked (so hidden images are loaded)"
+msgstr "Om skjulte bilder skal ignoreres - Standard: usann/ikke valgt (slik at skjulte bilder også lastes)"
+
+#: bj-lazy-load.php:344
+msgid "Event that triggers the image to load. Default: load+scroll"
+msgstr "Handling som utløser lasting av bilde. Standard: load+scroll"
+
+#: bj-lazy-load.php:349
+msgid "Number of msec after that the images will be loaded - Default: 10"
+msgstr "Antall msec etter handling som bildene lastes - Standard: 10"
+
+#: bj-lazy-load.php:357
+msgid "Any jQuery effect that makes the images display (e.g. \"fadeIn\") - Default: NULL"
+msgstr "Hvilken som helst jQuery-effekt som skal vise bildene (f.eks. \"fadeIn\") - Standard: NULL"
+
+#: bj-lazy-load.php:359
+msgid "NOTE: If you are loading a large number of images, it is best to NOT use this setting. Effects calls are very expensive. Even a simple show() can have a major impact on the browser&rsquo;s responsiveness."
+msgstr "MERK: Hvis du laster mange bilder, er det best å IKKE bruke denne innstillingen. Effektkall er veldig ressurskrevende. Til og med en enkel show() kan ha større innvirknign på nettleserens reaksjonsevne."
+
+#: bj-lazy-load.php:365
+msgid "string or number determining how long the animation will run - Default: 400"
+msgstr "streng eller tall som angir hvor lenge animasjonen skal kjøres - Standard: 400"
+
+#: bj-lazy-load.php:370
+msgid "An offset of \"500\" would cause any images that are less than 500px below the bottom of the window or 500px above the top of the window to load. - Default: 200"
+msgstr "En terskel på \"500\" vil laste bilder som er mindre enn 500px under nedre kant av vinduet eller 500px over øvre kant av vinduet. - Standard: 200"
+
+#: bj-lazy-load.php:375
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Du har ikke tilstrekkelig tilgangsnivå til denne siden."
+
+#. Description of the plugin/theme
+msgid "Lazy image loading makes your site load faster and saves bandwidth."
+msgstr "Lat bildelasting gjør nettsteder raskere og sparer båndbredde."
+

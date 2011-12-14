@@ -216,8 +216,13 @@ var BJLL = {
 class BJLL_Admin {
 
 	function __construct () {
+		add_action( 'init', array( $this, 'load_i18n' ) );
 		add_action( 'admin_menu', array( $this, 'plugin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+	}
+	
+	function load_i18n() {;
+		load_plugin_textdomain( 'bj-lazy-load', false, basename( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'lang' );
 	}
 
 	function plugin_menu () {

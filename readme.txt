@@ -5,7 +5,7 @@ Tags: images, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.2
 Tested up to: 3.3
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 
 Lazy image loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users.
 
@@ -46,11 +46,12 @@ Check your HTML source or see the magic at work in FireBug or similar.
 
 == Changelog ==
 
-= Version 0.2.3 =
+= Version 0.2.4 =
 * Now (more) compliant to the WP coding style guidelines.
 * All strings localized
+* Translations get loaded
 * POT file included (send me your translations)
-* Norwegian translation
+* Norwegian translation included
 
 = Version 0.2.3 =
 * Now using DOMDocument for better HTML parsing. Old regexp parsing as fallback if DOMDocument is not available.
