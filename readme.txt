@@ -19,7 +19,7 @@ Non-javascript visitors gets the original img element in noscript.
 Includes [JqueryAsynchImageLoader Plugin for jQuery by Sebastiano Armeli-Battana](http://www.sebastianoarmelibattana.com/projects/jail) for the real magic.
 
 = Coming soon =
-* Serving size optimized images for responsive layouts/adaptive designs
+* Serving size optimized images for responsive design/adaptive layout
 * (Got more ideas? Tell me!)
 
 == Installation ==
@@ -47,6 +47,12 @@ Check your HTML source or see the magic at work in FireBug or similar.
 == Changelog ==
 
 = Version 0.2.3 =
+* Now (more) compliant to the WP coding style guidelines.
+* All strings localized
+* POT file included (send me your translations)
+* Norwegian translation
+
+= Version 0.2.3 =
 * Now using DOMDocument for better HTML parsing. Old regexp parsing as fallback if DOMDocument is not available.
 
 = Version 0.2.2 =
@@ -68,6 +74,9 @@ Check your HTML source or see the magic at work in FireBug or similar.
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.2.4 =
+Better localization
 
 = 0.2.3 =
 Improved image replacement
