@@ -5,7 +5,7 @@ Tags: images, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.1
 Tested up to: 3.3.1
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 
 Lazy image loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users.
 
@@ -59,6 +59,7 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 == Changelog ==
 
 = Version 0.3.1 =
+* Also with d.sturm's fix
 
 = Version 0.3.0 =
 * Added BJLL::filter() so you can lazy load any images in your theme
@@ -97,6 +98,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.3.1 =
+Lazy load any image in your theme. Load in head.
 
 = 0.3.0 =
 Lazy load any image in your theme
