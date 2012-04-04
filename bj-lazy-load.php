@@ -287,7 +287,7 @@ class BJLL_Admin {
 		add_settings_field( 'bjll_filter_post_thumbnails', __( 'Lazy load post thumbnails', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_filter_post_thumbnails' ), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_filter_post_thumbnails' ) );
 		add_settings_field( 'bjll_include_js', __( 'Include JS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_js'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_js' ) );
 		add_settings_field( 'bjll_include_css', __( 'Include CSS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_css'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_css' ) );
-		add_settings_field( 'bjll_theme_caller', __( 'Theme caller function', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_theme_caller' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_theme_caller' ) );
+		add_settings_field( 'bjll_theme_caller', __( 'Theme caller function', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_theme_caller' ), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_theme_caller' ) );
 	
 		register_setting( 'bjll_options', 'bjll_timeout', 'intval' );
 		register_setting( 'bjll_options', 'bjll_effect' );
