@@ -410,7 +410,7 @@ class BJLL_Admin {
 			echo sprintf( '<option value="%1$s"%2$s>%1$s</option>', $option, $selected );
 		}
 		echo '</select> ';
-		_e( 'Put the script in either wp_footer() (should be right before </body>) or wp_head() (in the <head>-element).', 'bj-lazy-load' );
+		_e( 'Put the script in either wp_footer() (should be right before &lt;/body&gt;) or wp_head() (in the &lt;head&gt;-element).', 'bj-lazy-load' );
 	}
 	function setting_field_event () {
 		
