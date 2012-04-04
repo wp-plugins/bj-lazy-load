@@ -58,6 +58,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 == Changelog ==
 
+= Version 0.3.3 =
+* Replaced an anonymous function call causing error in PHP < 5.3
+
 = Version 0.3.2 =
 * The wp_head caller selector was added to the option page
 

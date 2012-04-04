@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.3.2
+Version: 0.3.3
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -28,7 +28,7 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.3.2';
+	const version = '0.3.3';
 	private $_placeholder_url;
 	
 	private static $_instance;
@@ -483,7 +483,13 @@ is_admin() will return true when trying to make an ajax request
 if (!is_admin() && !is_feed()) {
 */
 /* 'Conditional query tags do not work before the query is run. Before then, they always return false.' */
-add_action( 'wp', function() { if ( ! is_feed() ) { BJLL::singleton() ; } }, 10, 0 );
+/* Anonymous functions aren't available before PHP 5.3, so we need a temp wrapper */
+function BJLL_action_init () {
+	if ( ! is_feed() ) {
+		BJLL::singleton() ;
+	}
+}
+add_action( 'wp', 'BJLL_action_init', 10, 0 );
 
 
 if ( is_admin() ) {
