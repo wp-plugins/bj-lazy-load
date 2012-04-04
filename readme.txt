@@ -62,7 +62,7 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * The wp_head caller selector was added to the option page
 
 = Version 0.3.1 =
-* Also with d.sturm's fix
+* Also with d.sturm's fix (thanks)
 
 = Version 0.3.0 =
 * Added BJLL::filter() so you can lazy load any images in your theme
