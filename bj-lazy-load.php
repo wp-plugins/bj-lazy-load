@@ -3,12 +3,12 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.2.5
+Version: 0.3.0
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
 
-    Copyright 2011  Bjørn Johansen  (email : post@bjornjohansen.no)
+    Copyright 2011–2012  Bjørn Johansen  (email : post@bjornjohansen.no)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -28,8 +28,10 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.2.5';
+	const version = '0.3.0';
 	private $_placeholder_url;
+	
+	private static $_instance;
 
 	function __construct() {
 		
@@ -54,6 +56,14 @@ class BJLL {
 			add_filter( 'post_thumbnail_html', array( $this, 'filter_post_thumbnail_html' ), 10 );
 		}
 	}
+	
+	public static function singleton() {
+        if (!isset(self::$_instance)) {
+            $className = __CLASS__;
+            self::$_instance = new $className;
+        }
+        return self::$_instance;
+    }
 	
 	public function enqueue_styles() {
 		wp_enqueue_style( 'BJLL', plugins_url( '/css/bjll.css', __FILE__ ), array(), self::version );
@@ -138,6 +148,15 @@ var BJLL = {
 
 	}
 	
+	static function filter ( $html ) {
+		$BJLL = BJLL::singleton();
+		return $BJLL->get_placeholder_html ( $html );
+	}
+	
+	public function get_placeholder_html ( $html ) {
+		return $this->_get_placeholder_html ( $html );
+	}
+	
 	protected function _get_placeholder_html ( $html ) {
 	
 		if ( class_exists( 'DOMDocument') ) {
@@ -153,7 +172,7 @@ var BJLL = {
 	
 		$loadhtml = sprintf( '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title></title></head><body>%s</body></html>', $html );
 	
-		$doc = DOMDocument::loadHTML( $loadhtml );
+		$doc = @DOMDocument::loadHTML( $loadhtml );
 		if ( ! $doc ) {
 			return $this->_get_placeholder_html_regexp( $html );
 		}
@@ -409,13 +428,14 @@ class BJLL_Admin {
 
 }
 
+
 /*
 is_admin() will return true when trying to make an ajax request
 if (!is_admin() && !is_feed()) {
 */
-if ( ! is_feed() ) {
-	new BJLL;
-}
+/* 'Conditional query tags do not work before the query is run. Before then, they always return false.' */
+add_action( 'wp', function() { if ( ! is_feed() ) { BJLL::singleton() ; } }, 10, 0 );
+
 
 if ( is_admin() ) {
 	new BJLL_Admin;
