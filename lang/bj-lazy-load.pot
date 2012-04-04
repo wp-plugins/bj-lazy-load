@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the BJ Lazy Load package.
 msgid ""
 msgstr ""
-"Project-Id-Version: BJ Lazy Load 0.3.2\n"
+"Project-Id-Version: BJ Lazy Load 0.3.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bj-lazy-load\n"
-"POT-Creation-Date: 2012-04-04 08:01:04+00:00\n"
+"POT-Creation-Date: 2012-04-04 23:30:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -86,8 +86,8 @@ msgstr ""
 
 #: bj-lazy-load.php:413
 msgid ""
-"Put the script in either wp_footer() (should be right before </body>) or "
-"wp_head() (in the <head>-element)."
+"Put the script in either wp_footer() (should be right before &lt;/body&gt;) "
+"or wp_head() (in the &lt;head&gt;-element)."
 msgstr ""
 
 #: bj-lazy-load.php:430

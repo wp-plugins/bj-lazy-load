@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BJ Lazy Load 0.2.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/bj-lazy-load\n"
-"POT-Creation-Date: 2012-04-04 08:01:04+00:00\n"
-"PO-Revision-Date: 2012-04-04 10:07+0100\n"
+"POT-Creation-Date: 2012-04-04 23:30:34+00:00\n"
+"PO-Revision-Date: 2012-04-05 01:34+0100\n"
 "Last-Translator: Bjørn Johansen <post@bjornjohansen.no>\n"
 "Language-Team:  <post@bjornjohansen.no>\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgid "Whether to ignore hidden images to be loaded - Default: false/unchecked (
 msgstr "Om skjulte bilder skal ignoreres - Standard: usann/ikke valgt (slik at skjulte bilder også lastes)"
 
 #: bj-lazy-load.php:413
-msgid "Put the script in either wp_footer() (should be right before </body>) or wp_head() (in the <head>-element)."
+msgid "Put the script in either wp_footer() (should be right before &lt;/body&gt;) or wp_head() (in the &lt;head&gt;-element)."
 msgstr "Legg skriptet enten i wp_footer() (bør være rett før &lt;/body&gt;) eller wp_head() (i &lt;head&gt;-elementet)."
 
 #: bj-lazy-load.php:430
