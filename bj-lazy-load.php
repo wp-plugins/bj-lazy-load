@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.3.1
+Version: 0.3.2
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -28,7 +28,7 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.3.1';
+	const version = '0.3.2';
 	private $_placeholder_url;
 	
 	private static $_instance;
@@ -36,7 +36,7 @@ class BJLL {
 	function __construct() {
 		
 		$this->_placeholder_url = plugins_url( '/img/placeholder.gif', __FILE__ );
-	
+		
 		if (get_option( 'bjll_include_css', 1 )) {
 			add_action( 'wp_print_styles', array($this, 'enqueue_styles' ) );
 		}
@@ -45,7 +45,12 @@ class BJLL {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 		
-		add_action( 'wp_print_footer_scripts', array( $this, 'output_js_options' ) );
+		$theme_caller = get_option( 'bjll_theme_caller' );
+		if ( $theme_caller == 'wp_head' ) {
+			add_action( 'wp_print_scripts', array( $this, 'output_js_options' ) );
+		} else {
+			add_action( 'wp_print_footer_scripts', array( $this, 'output_js_options' ) );
+		}
 
 		add_action( 'wp_ajax_BJLL_get_images', array( $this, 'get_images_json' ) );
 		add_action( 'wp_ajax_nopriv_BJLL_get_images', array( $this, 'get_images_json') );
@@ -70,11 +75,17 @@ class BJLL {
 	}
 
 	public function enqueue_scripts() {
+	
+		$in_footer = true;
+		$theme_caller = get_option( 'bjll_theme_caller' );
+		if ( $theme_caller == 'wp_head' ) {
+			$in_footer = false;
+		}
 		
 		//wp_enqueue_script( 'JAIL', plugins_url( '/js/jail.min.js', __FILE__ ), array( 'jquery'), '0.9.7', true );
 		//wp_enqueue_script( 'BJLL', plugins_url( '/js/bjll.js', __FILE__ ), array( 'jquery', 'JAIL' ), self::version, true );
 		
-		wp_enqueue_script( 'BJLL', plugins_url( '/js/bjll.min.js', __FILE__ ), array( 'jquery' ), self::version, true );
+		wp_enqueue_script( 'BJLL', plugins_url( '/js/bjll.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 
 	} 
 	
@@ -269,12 +280,14 @@ class BJLL_Admin {
 		register_setting( 'bjll_options', 'bjll_filter_post_thumbnails', 'intval' );
 		register_setting( 'bjll_options', 'bjll_include_js', 'intval' );
 		register_setting( 'bjll_options', 'bjll_include_css', 'intval' );
+		register_setting( 'bjll_options', 'bjll_theme_caller' );
 
 		add_settings_section( 'bjll_general', __('General'), array( 'BJLL_Admin', 'settings_section_general' ), 'bjll' );
 		
 		add_settings_field( 'bjll_filter_post_thumbnails', __( 'Lazy load post thumbnails', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_filter_post_thumbnails' ), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_filter_post_thumbnails' ) );
 		add_settings_field( 'bjll_include_js', __( 'Include JS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_js'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_js' ) );
 		add_settings_field( 'bjll_include_css', __( 'Include CSS', 'bj-lazy-load' ), array( 'BJLL_Admin', 'setting_field_include_css'), 'bjll', 'bjll_general', array( 'label_for' => 'bjll_include_css' ) );
+		add_settings_field( 'bjll_theme_caller', __( 'Theme caller function', 'bj-lazy-load' ), array('BJLL_Admin', 'setting_field_theme_caller' ), 'bjll', 'bjll_loader', array( 'label_for' => 'bjll_theme_caller' ) );
 	
 		register_setting( 'bjll_options', 'bjll_timeout', 'intval' );
 		register_setting( 'bjll_options', 'bjll_effect' );
@@ -297,6 +310,18 @@ class BJLL_Admin {
 		
 	}
 	
+	function sanitize_setting_theme_caller ( $val ) {
+		$validoptions = self::_get_valid_setting_options_event();
+		if ( ! in_array( $val, $validoptions ) ) {
+			// get previous saved value
+			$val = get_option( 'bjll_theme_caller', 'wp_footer' );
+			if ( ! in_array( $val, $validoptions ) ) {
+				// if still not valid, set to our default
+				$val = $validoptions[0];
+			}
+		}
+		return $val;
+	}
 	function sanitize_setting_event ( $val ) {
 		$validoptions = self::_get_valid_setting_options_event();
 		if ( ! in_array( $val, $validoptions ) ) {
@@ -317,6 +342,9 @@ class BJLL_Admin {
 		return $val;
 	}
 	
+	private static function _get_valid_setting_options_theme_caller () {
+		return array( 'wp_footer', 'wp_head' );
+	}
 	private static function _get_valid_setting_options_event () {
 		return array( 'load+scroll', 'load', 'click', 'mouseover', 'scroll' );
 	}
@@ -367,13 +395,30 @@ class BJLL_Admin {
 		_e( 'Whether to ignore hidden images to be loaded - Default: false/unchecked (so hidden images are loaded)', 'bj-lazy-load' );
 
 	}
+	function setting_field_theme_caller () {
+		
+		$options = self::_get_valid_setting_options_theme_caller();
+	
+		$currentval = get_option( 'bjll_theme_caller' );
+		
+		echo '<select id="bjll_theme_caller" name="bjll_theme_caller">';
+		foreach ( $options as $option ) {
+			$selected = '';
+			if ( $option == $currentval ) {
+				$selected = ' selected="selected"';
+			}
+			echo sprintf( '<option value="%1$s"%2$s>%1$s</option>', $option, $selected );
+		}
+		echo '</select> ';
+		_e( 'Put the script in either wp_footer() (should be right before </body>) or wp_head() (in the <head>-element).', 'bj-lazy-load' );
+	}
 	function setting_field_event () {
 		
 		$options = self::_get_valid_setting_options_event();
 	
 		$currentval = get_option( 'bjll_event' );
 		
-		echo '<select id="bjll_event" name="bjll_event" type="checkbox">';
+		echo '<select id="bjll_event" name="bjll_event">';
 		foreach ( $options as $option ) {
 			$selected = '';
 			if ( $option == $currentval ) {

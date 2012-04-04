@@ -58,6 +58,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 == Changelog ==
 
+= Version 0.3.2 =
+* The wp_head caller selection was added to the option page
+
 = Version 0.3.1 =
 * Also with d.sturm's fix
 
@@ -98,6 +101,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.3.2 =
+Lazy load any image in your theme. Load in head.
 
 = 0.3.1 =
 Lazy load any image in your theme. Load in head.
