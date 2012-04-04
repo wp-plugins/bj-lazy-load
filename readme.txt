@@ -42,7 +42,7 @@ echo $img;
 == Frequently Asked Questions ==
 
 = Whoa, this plugin is using JavaScript. What about visitors without JS? =
-No worries. They get the original image in a noscript element.
+No worries. They get the original image in a noscript element. No Lazy Loading for them, though.
 
 = Which browsers are supported? =
 The included JavaScript is tested in Firefox 2+, Safari 3+, Opera 9+, Chrome 5+, Internet Explorer 6+
@@ -59,7 +59,7 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 == Changelog ==
 
 = Version 0.3.2 =
-* The wp_head caller selection was added to the option page
+* The wp_head caller selector was added to the option page
 
 = Version 0.3.1 =
 * Also with d.sturm's fix
