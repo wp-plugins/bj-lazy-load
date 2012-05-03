@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.3.3
+Version: 0.4.0
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -28,7 +28,7 @@ License: GPL2
 
 class BJLL {
 
-	const version = '0.3.3';
+	const version = '0.4.0';
 	private $_placeholder_url;
 	
 	private static $_instance;
@@ -207,7 +207,7 @@ var BJLL = {
 			
 			$class .= ' lazy lazy-hidden';
 			
-			$img->setAttribute( 'data-href' , $src );
+			$img->setAttribute( 'data-src' , $src );
 			$img->setAttribute( 'src' , $this->_placeholder_url );
 			$img->setAttribute( 'class' , trim( $class ) );
 			
@@ -226,8 +226,8 @@ var BJLL = {
 		$orig_html = $html;
 		
 		/**/
-		// replace the src and add the data-href attribute
-		$html = preg_replace( '/<img(.*?)src=/i', '<img$1src="' . $this->_placeholder_url . '" data-href=', $html );
+		// replace the src and add the data-src attribute
+		$html = preg_replace( '/<img(.*?)src=/i', '<img$1src="' . $this->_placeholder_url . '" data-src=', $html );
 		
 		// add the lazy class to the img element
 		if ( preg_match( '/class="/i', $html ) ) {

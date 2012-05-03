@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: images, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: 0.3.3
+Tested up to: 3.3.2
+Stable tag: 0.4.0
 
 Lazy image loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users.
 
@@ -58,6 +58,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 == Changelog ==
 
+= Version 0.4.0 =
+* Upgraded JAIL to version 0.9.9, fixing some bugs. Note: data-href is now renamed data-src.
+
 = Version 0.3.3 =
 * Replaced an anonymous function call causing error in PHP < 5.3
 
@@ -104,6 +107,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.4.0 =
+New JAIL version.
 
 = 0.3.2 =
 Lazy load any image in your theme. Load in head.
