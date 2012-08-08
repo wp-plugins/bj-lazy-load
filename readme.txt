@@ -1,24 +1,22 @@
 === BJ Lazy Load ===
 Contributors: bjornjohansen
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NLUWR4SHCJRBJ
-Tags: images, lazy loading, jquery, javascript, optimize, performance, bandwidth
+Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
-Requires at least: 3.1
-Tested up to: 3.3.2
-Stable tag: 0.4.0
+Requires at least: 3.3
+Tested up to: 3.4.1
+Stable tag: 0.5.0
 
-Lazy image loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users.
+Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
 == Description ==
-Lazy image loading makes your site load faster and saves bandwidth.
+Lazy loading makes your site load faster and saves bandwidth.
 
-This plugin replaces all your post images and post thumbnails with a placeholder and loads images as they enter the browser window when the visitor scrolls the page.
+This plugin replaces all your post images, post thumbnails, gravatar images and content iframes with a placeholder and loads the content as it gets close to enter the browser window when the visitor scrolls the page.
 
-You can also lazy load other images in your theme, by using a simple function.
+You can also lazy load other images and iframes in your theme, by using a simple function.
 
-Non-javascript visitors gets the original img element in noscript.
-
-Includes [JqueryAsynchImageLoader Plugin for jQuery by Sebastiano Armeli-Battana](http://www.sebastianoarmelibattana.com/projects/jail) for the lazy loading magic.
+Non-javascript visitors gets the original element in noscript.
 
 = Coming soon =
 * Serving size optimized images for responsive design/adaptive layout
@@ -26,7 +24,7 @@ Includes [JqueryAsynchImageLoader Plugin for jQuery by Sebastiano Armeli-Battana
 
 == Installation ==
 1. Download and unzip plugin
-2. Upload the 'bj-lazyload' folder to the '/wp-content/plugins/' directory,
+2. Upload the 'bj-lazy-load' folder to the '/wp-content/plugins/' directory,
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Optional usage ==
@@ -42,7 +40,7 @@ echo $img;
 == Frequently Asked Questions ==
 
 = Whoa, this plugin is using JavaScript. What about visitors without JS? =
-No worries. They get the original image in a noscript element. No Lazy Loading for them, though.
+No worries. They get the original element in a noscript element. No Lazy Loading for them, though.
 
 = Which browsers are supported? =
 The included JavaScript is tested in Firefox 2+, Safari 3+, Opera 9+, Chrome 5+, Internet Explorer 6+
@@ -57,6 +55,12 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.5.0 =
+* Complete rewrite
+* Replaced JAIL with jQuery.sonar to accomodate for iframe lazy loading
+* Added lazy loading for iframes
+* The manual filter code now works as it should, lazy loading all images instead of just the first. 
 
 = Version 0.4.0 =
 * Upgraded JAIL to version 0.9.9, fixing some bugs. Note: data-href is now renamed data-src.
@@ -107,6 +111,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.5.0 =
+Lazy load images and iframes. Complete rewrite.
 
 = 0.4.0 =
 New JAIL version.
