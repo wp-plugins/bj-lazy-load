@@ -2,18 +2,24 @@
 
 	function bj_lazy_load_init() {
 		
-		$('.lazy-hidden').not('[data-lazy-ready]').one( 'scrollin.bj_lazy_load', { distance: 200 }, function() {
+		$('.lazy-hidden').not('.data-lazy-ready').one( 'scrollin.bj_lazy_load', { distance: 200 }, function() {
 			
 			var $el = $( this ),
 				data_lazy_type = $el.attr( 'data-lazy-type' );
 
 			if ( data_lazy_type == 'image' ) {
-				$el.attr( 'src', $el.attr( 'data-lazy-src' ) )
-					.removeClass( 'lazy-hidden' );
+				$el.hide()
+					.attr( 'src', $el.attr( 'data-lazy-src' ) )
+					.removeClass( 'lazy-hidden' )
+					.fadeIn();
 			} else if ( data_lazy_type == 'iframe' ) {
-				$el.replaceWith( bj_lazy_load_base64_decode( $el.attr( 'data-lazy-src' ) ) );
+				$el.replaceWith(
+					bj_lazy_load_base64_decode(
+						$el.attr( 'data-lazy-src' )
+					)
+				);
 			}
-		}).attr( 'data-lazy-ready', 'true' );
+		}).addClass( 'data-lazy-ready' );
 		
 	}
 	
