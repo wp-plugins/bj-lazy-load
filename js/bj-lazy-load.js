@@ -73,6 +73,6 @@
 		return dec;
 	}
 	
-	$( document ).on( 'ready', bj_lazy_load_init );
+	$( document ).bind( 'ready', bj_lazy_load_init ); // using .on is more efficient, but requires jQuery 1.7
 	
 })(jQuery);

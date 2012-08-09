@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.5.0
+Version: 0.5.1
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.5.0';
+		const version = '0.5.1';
 		protected $_placeholder_url;
 		
 		protected static $_instance;
@@ -42,9 +42,18 @@ if ( ! class_exists( 'BJLL' ) ) {
 		
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			
-			add_filter( 'the_content', array( $this, 'filter' ), 200 );
-			add_filter( 'post_thumbnail_html', array( $this, 'filter' ), 200 );
-			add_filter( 'get_avatar', array( $this, 'filter' ), 200 );
+			$options = self::_get_options();
+			
+			
+			if ( $options->get('filter_content') == 'yes' ) {
+				add_filter( 'the_content', array( $this, 'filter' ), 200 );
+			}
+			if ( $options->get('filter_post_thumbnails') == 'yes' ) {
+				add_filter( 'post_thumbnail_html', array( $this, 'filter' ), 200 );
+			}
+			if ( $options->get('filter_gravatars') == 'yes' ) {
+				add_filter( 'get_avatar', array( $this, 'filter' ), 200 );
+			}
 		}
 		
 		static function singleton() {
@@ -143,9 +152,12 @@ if ( ! class_exists( 'BJLL' ) ) {
 		
 		protected function _get_options() {
 			return new scbOptions( 'bj_lazy_load_options', __FILE__, array(
-				'lazy_load_images'      => 'yes',
-				'lazy_load_iframes'     => 'yes',
-				'theme_loader_function' => 'wp_footer'
+				'filter_content'          => 'yes',
+				'filter_post_thumbnails'  => 'yes',
+				'filter_gravatars'        => 'yes',
+				'lazy_load_images'        => 'yes',
+				'lazy_load_iframes'       => 'yes',
+				'theme_loader_function'   => 'wp_footer'
 			) );
 		}
 		
