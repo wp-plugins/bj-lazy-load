@@ -54,6 +54,12 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 = How can I verify that the plugin is working? =
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
+== Screenshots ==
+
+1. The Posts overview gets a new, sortable column that shows number of shares on Facebook
+2. Widget settings
+3. Sample usage of widget. The HTML is really easy to override.
+
 == Changelog ==
 
 = Version 0.5.2 =
