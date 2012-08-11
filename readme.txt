@@ -56,6 +56,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 == Changelog ==
 
+= Version 0.5.3 =
+* Added filter: bj_lazy_load_placeholder_url - override placeholder image (should be an option setting in the future)
+
 = Version 0.5.2 =
 * Added the fadeIn effect
 
