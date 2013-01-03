@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
-Tested up to: 3.4.1
-Stable tag: 0.5.2
+Tested up to: 3.5
+Stable tag: 0.5.4
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -35,7 +35,7 @@ if ( class_exists( 'BJLL' ) ) {
 	$img = BJLL::filter( $img );
 }
 echo $img;
-?>` 
+?>`
 
 == Frequently Asked Questions ==
 
@@ -55,6 +55,10 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.5.4 =
+* Possible to skip lazy loading of certain images with specified classnames
+* Made the placeholder image override an option setting in wp-admin
 
 = Version 0.5.3 =
 * Added filter: bj_lazy_load_placeholder_url - override placeholder image (should be an option setting in the future)
@@ -121,6 +125,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.5.4 =
+Custom placeholder. Skip selected images.
 
 = 0.5.2 =
 Added fadeIn effect

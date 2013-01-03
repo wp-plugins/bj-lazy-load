@@ -48,8 +48,19 @@ class BJLL_Admin_Page extends scbAdminPage {
 				'type' => 'select',
 				'name' => 'theme_loader_function',
 				'value' => array( 'wp_footer', 'wp_head' ),
-				
-			)
+			),
+			array(
+				'title' => __( 'Placeholder Image URL', 'bj_lazy_load' ),
+				'type' => 'text',
+				'name' => 'placeholder_url',
+				'desc' => __( 'Leave blank for default', 'bj_lazy_load' ),
+			),
+			array(
+				'title' => __( 'Skip images with classes', 'bj_lazy_load' ),
+				'type' => 'text',
+				'name' => 'skip_classes',
+				'desc' => __( 'Comma separated. Example: "no-lazy, lazy-ignore, image-235"', 'bj_lazy_load' ),
+			),
 		) );
 		
 	}
