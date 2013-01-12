@@ -1,15 +1,35 @@
+
+var BJLL = BJLL || {};
+
 (function($) {
 
 	function bj_lazy_load_init() {
 		
 		$('.lazy-hidden').not('.data-lazy-ready').one( 'scrollin.bj_lazy_load', { distance: 200 }, function() {
-			
+
 			var $el = $( this ),
 				data_lazy_type = $el.attr( 'data-lazy-type' );
 
 			if ( data_lazy_type == 'image' ) {
+
+				var imgurl = $el.attr( 'data-lazy-src' );
+
+				if ( BJLL.load_responsive == 'yes' || BJLL.load_hidpi == 'yes' ) {
+					var l = document.createElement( 'a' );
+					l.href = $el.attr( 'data-lazy-src' );
+
+					if ( ! l.hostname.length || l.hostname == window.location.hostname ) {
+						var loadimgwidth = parseInt( $el.css( 'width' ) );
+						if ( window.devicePixelRatio > 1 && BJLL.load_hidpi == 'yes' ) {
+							loadimgwidth = Math.ceil( window.devicePixelRatio * loadimgwidth );
+						}
+						imgurl = BJLL.thumb_base + escape( $el.attr( 'data-lazy-src' ) ) + '&w=' + loadimgwidth;
+					}
+
+				}
+
 				$el.hide()
-					.attr( 'src', $el.attr( 'data-lazy-src' ) )
+					.attr( 'src', imgurl )
 					.removeClass( 'lazy-hidden' )
 					.fadeIn();
 			} else if ( data_lazy_type == 'iframe' ) {
@@ -80,5 +100,8 @@
 	}
 	
 	$( document ).bind( 'ready', bj_lazy_load_init ); // using .on is more efficient, but requires jQuery 1.7
+	if ( BJLL.infinite_scroll == 'yes' ) {
+		$( window ).bind( 'scroll', bj_lazy_load_init ); // using .on is more efficient, but requires jQuery 1.7
+	}
 	
 })(jQuery);

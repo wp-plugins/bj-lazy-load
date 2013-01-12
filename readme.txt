@@ -1,11 +1,11 @@
 === BJ Lazy Load ===
 Contributors: bjornjohansen
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NLUWR4SHCJRBJ
-Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth
+Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 0.5.4
+Stable tag: 0.6.0
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -18,9 +18,10 @@ You can also lazy load other images and iframes in your theme, by using a simple
 
 Non-javascript visitors gets the original element in noscript.
 
-= Coming soon =
-* Serving size optimized images for responsive design/adaptive layout
-* (Got more ideas? Tell me!)
+= Size optimized images =
+* Automaticly serve scaled down images in responsive designs
+* Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
+
 
 == Installation ==
 1. Download and unzip plugin
@@ -55,6 +56,13 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.0 =
+* Optionally serving size optimized images for responsive design/adaptive layout 
+* Optionally serving hiDPI images (retina support)
+* Option to disable BJ Lazy Load for WPTouch
+* Fixed issue with infinite scroll (must be enabled on options screen)
+* Upgraded jQuery.sonar to latest version
 
 = Version 0.5.4 =
 * Possible to skip lazy loading of certain images with specified classnames
@@ -125,6 +133,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.6.0 =
+Image size adaption. Infinite scroll & WPTouch fixes.
 
 = 0.5.4 =
 Custom placeholder. Skip selected images.

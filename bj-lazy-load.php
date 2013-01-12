@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.5.4
+Version: 0.6.0
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.5.4';
+		const version = '0.6.0';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -39,9 +39,14 @@ if ( ! class_exists( 'BJLL' ) ) {
 
 		function __construct() {
 		
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			
 			$options = self::_get_options();
+
+			if ( 'yes' == $options->get( 'disable_on_wptouch' ) && function_exists( 'bnc_wptouch_is_mobile' ) && bnc_wptouch_is_mobile()  ) {
+				return;
+			}
+
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			
 			$skip_classes = $options->get( 'skip_classes' );
 			if ( strlen( trim( $skip_classes ) ) ) {
@@ -82,9 +87,32 @@ if ( ! class_exists( 'BJLL' ) ) {
 			if ( $theme_loader_function == 'wp_head' ) {
 				$in_footer = false;
 			}
-			
+
 			wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
-			wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.min.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
+
+			if ( SCRIPT_DEBUG ) {
+				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
+			} else {
+				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.min.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
+			}
+
+			$bjll_options = array();
+
+			if ( $options->get('load_hidpi') == 'yes' || $options->get('load_responsive') == 'yes' ) {
+				$bjll_options['thumb_base'] = plugins_url( '/thumb.php', __FILE__ ) . '?src=';
+				$bjll_options['load_hidpi'] = $options->get('load_hidpi');
+				$bjll_options['load_responsive'] = $options->get('load_responsive');
+			}
+
+			if ( $options->get('infinite_scroll') == 'yes' ) {
+				$bjll_options['infinite_scroll'] = $options->get('infinite_scroll');
+			}
+			
+
+			if ( count( $bjll_options ) ) {
+				wp_localize_script( 'BJLL', 'BJLL', $bjll_options );
+			}
+
 		}
 		
 		static function filter( $content ) {
@@ -175,7 +203,10 @@ if ( ! class_exists( 'BJLL' ) ) {
 				'lazy_load_iframes'       => 'yes',
 				'theme_loader_function'   => 'wp_footer',
 				'placeholder_url'         => '',
-				'skip_classes'            => ''
+				'skip_classes'            => '',
+				'load_hidpi'              => 'no',
+				'load_responsive'         => 'no',
+				'disable_on_wptouch'      => 'no'
 			) );
 		}
 		
