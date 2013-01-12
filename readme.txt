@@ -47,7 +47,8 @@ No worries. They get the original element in a noscript element. No Lazy Loading
 The included JavaScript is tested in Firefox 2+, Safari 3+, Opera 9+, Chrome 5+, Internet Explorer 6+
 
 = I'm using a CDN. Will this plugin interfere? =
-Nope. The images will still load from your CDN.
+Lazy loading works just fine. The images will still load from your CDN.
+As of version 0.6.0, Serving responsive and hiDPI images will not work if you're using a CDN. Pull zones will be supported in the near future.
 
 = The plugin doesn't work/doesn't replace my images =
 Probably, your theme does not call wp_footer(). Edit the plugin settings to load in wp_head() instead.
