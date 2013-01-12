@@ -5,7 +5,7 @@ Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, 
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 0.6.0
+Stable tag: 0.6.1
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -58,6 +58,9 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.1 =
+* Bugfix: The infinite_scroll option wasn't initialized
 
 = Version 0.6.0 =
 * Optionally serving size optimized images for responsive design/adaptive layout 
