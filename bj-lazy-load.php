@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.1
+Version: 0.6.2
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.0';
+		const version = '0.6.2';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -90,7 +90,7 @@ if ( ! class_exists( 'BJLL' ) ) {
 
 			wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 
-			if ( SCRIPT_DEBUG ) {
+			if ( defined( 'SCRIPT_DEBUG') && SCRIPT_DEBUG ) {
 				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
 			} else {
 				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.min.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
