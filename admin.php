@@ -88,7 +88,7 @@ class BJLL_Admin_Page extends scbAdminPage {
 		);
 
 
-		if ( function_exists( 'bnc_wptouch_is_mobile' ) ) {
+		if ( BJLL::has_wptouch() ) {
 			$optionfields[] = array(
 				'title' => __( 'Disable on WPTouch', 'bj_lazy_load' ),
 				'type' => 'radio',
