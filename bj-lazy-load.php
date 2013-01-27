@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.2
+Version: 0.6.3
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.2';
+		const version = '0.6.3';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -42,7 +42,7 @@ if ( ! class_exists( 'BJLL' ) ) {
 			
 			$options = self::_get_options();
 
-			if ( 'yes' == $options->get( 'disable_on_wptouch' ) && function_exists( 'bnc_wptouch_is_mobile' ) && bnc_wptouch_is_mobile()  ) {
+			if ( 'yes' == $options->get( 'disable_on_wptouch' ) && self::is_wptouch() ) {
 				return;
 			}
 
@@ -220,6 +220,31 @@ if ( ! class_exists( 'BJLL' ) ) {
 				require_once( dirname( __FILE__ ) . '/admin.php' );
 				new BJLL_Admin_Page( __FILE__, $options );
 			}
+		}
+
+		static function is_wptouch() {
+			if ( function_exists( 'bnc_wptouch_is_mobile' ) && bnc_wptouch_is_mobile() ) {
+				return true;
+			}
+
+			global $wptouch_pro;
+
+			if ( defined( 'WPTOUCH_VERSION' ) || is_object( $wptouch_pro ) ) {
+				
+				if ( $wptouch_pro->showing_mobile_theme ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		static function has_wptouch() {
+			if ( function_exists( 'bnc_wptouch_is_mobile' ) || defined( 'WPTOUCH_VERSION' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 		
 	}
