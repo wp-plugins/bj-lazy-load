@@ -5,7 +5,7 @@ Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, 
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -58,6 +58,9 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.5 =
+* Iframe lazy loading is now compatible with Gravity Forms' ajax forms.
 
 = Version 0.6.4 =
 * Disable when viewing printable page from WP-Print
@@ -147,6 +150,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.6.5 =
+Improved compability with Gravity Forms
 
 = 0.6.4 =
 Disable when viewing printable page from WP-Print

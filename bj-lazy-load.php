@@ -3,12 +3,12 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.4
+Version: 0.6.5
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
 
-    Copyright 2011–2012  Bjørn Johansen  (email : post@bjornjohansen.no)
+    Copyright 2011–2013  Bjørn Johansen  (email : post@bjornjohansen.no)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -31,7 +31,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.4';
+		const version = '0.6.5';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -185,6 +185,12 @@ if ( ! class_exists( 'BJLL' ) ) {
 			$replace = array();
 			
 			foreach ( $matches[0] as $iframeHTML ) {
+
+				// Don't mess with the Gravity Forms ajax iframe
+				if ( strpos( $iframeHTML, 'gform_ajax_frame' ) ) {
+					continue;
+				}
+
 				$replaceHTML = '<img src="' . $this->_placeholder_url . '"  class="lazy lazy-hidden" data-lazy-type="iframe" data-lazy-src="' . base64_encode($iframeHTML) . '" alt="">';
 				
 				$replaceHTML .= '<noscript>' . $iframeHTML . '</noscript>';
