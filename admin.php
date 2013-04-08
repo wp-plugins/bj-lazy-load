@@ -98,6 +98,16 @@ class BJLL_Admin_Page extends scbAdminPage {
 			);
 		}
 
+		if ( BJLL::has_mobilepress() ) {
+			$optionfields[] = array(
+				'title' => __( 'Disable on MobilePress', 'bj_lazy_load' ),
+				'type' => 'radio',
+				'name' => 'disable_on_mobilepress',
+				'value' => array( 'yes' => __( 'Yes', 'bj_lazy_load' ), 'no' => __( 'No', 'bj_lazy_load' ) ),
+				'desc' => sprintf( '<p class="description">%s</p>', __( 'Disables BJ Lazy Load when the MobilePress mobile theme is used', 'bj_lazy_load' ) ),
+			);
+		}
+
 		echo $this->form_table( $optionfields );
 		
 	}
