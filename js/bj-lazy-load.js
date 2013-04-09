@@ -103,5 +103,6 @@ var BJLL = BJLL || {};
 	if ( BJLL.infinite_scroll == 'yes' ) {
 		$( window ).bind( 'scroll', bj_lazy_load_init ); // using .on is more efficient, but requires jQuery 1.7
 	}
+	$(window).on("resize", function() { $(document).trigger("scroll"); });
 	
 })(jQuery);
