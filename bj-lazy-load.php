@@ -40,7 +40,7 @@ require_once( dirname(__FILE__) . '/scb/load.php' );
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.6';
+		const version = '0.6.7';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -105,12 +105,13 @@ if ( ! class_exists( 'BJLL' ) ) {
 				$in_footer = false;
 			}
 
-			wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
+			
 
 			if ( defined( 'SCRIPT_DEBUG') && SCRIPT_DEBUG ) {
+				wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
 			} else {
-				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.min.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
+				wp_enqueue_script( 'BJLL', plugins_url( '/js/combined.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 			}
 
 			$bjll_options = array();
