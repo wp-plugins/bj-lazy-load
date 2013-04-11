@@ -22,6 +22,7 @@ Non-javascript visitors gets the original element in noscript.
 * Automaticly serve scaled down images in responsive designs
 * Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
 
+Please let me know if you have any issues. Fastest way to get a response is by Twitter: http://twitter.com/bjornjohansen
 
 == Installation ==
 1. Download and unzip plugin
@@ -64,7 +65,7 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 = Version 0.6.7 =
 * Combined JS files for faster loading
-* Bugfix for when viewport is resized (now triggering scroll event)
+* Bugfix for when viewport is resized – now triggering scroll event (thanks kReEsTaL)
 
 = Version 0.6.6 =
 * Option to disable BJ Lazy Load for MobilePress
