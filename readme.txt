@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 0.6.8
+Tested up to: 3.6
+Stable tag: 0.6.9
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -59,6 +59,10 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.9 =
+* Bugfix: Single quotes for the class attribute is now handled (thanks @kReEsTaL)
+* Bugfix: Removed strict error notice (thanks syndrael)
 
 = Version 0.6.8 =
 * Bugfix: sonar.js wouldn't load properly when SCRIPT_DEBUG was set to true (thanks @techawakening)
@@ -161,6 +165,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.6.9 =
+Bugfix release
 
 = 0.6.8 =
 Bugfix: Works with SCRIPT_DEBUG

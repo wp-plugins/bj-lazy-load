@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.8
+Version: 0.6.9
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -171,8 +171,8 @@ if ( ! class_exists( 'BJLL' ) ) {
 					$replaceHTML = preg_replace( '/<img(.*?)src=/i', '<img$1src="' . $this->_placeholder_url . '" data-lazy-type="image" data-lazy-src=', $imgHTML );
 					
 					// add the lazy class to the img element
-					if ( preg_match( '/class="/i', $replaceHTML ) ) {
-						$replaceHTML = preg_replace( '/class="(.*?)"/i', 'class="lazy lazy-hidden $1"', $replaceHTML );
+					if ( preg_match( '/class=["\']/i', $replaceHTML ) ) {
+						$replaceHTML = preg_replace( '/class=(["\'])(.*?)["\']/i', 'class=$1lazy lazy-hidden $2$1', $replaceHTML );
 					} else {
 						$replaceHTML = preg_replace( '/<img/i', '<img class="lazy lazy-hidden"', $replaceHTML );
 					}
@@ -218,7 +218,7 @@ if ( ! class_exists( 'BJLL' ) ) {
 			return $content;
 		}
 		
-		protected function _get_options() {
+		protected static function _get_options() {
 			return new scbOptions( 'bj_lazy_load_options', __FILE__, array(
 				'filter_content'          => 'yes',
 				'filter_post_thumbnails'  => 'yes',
@@ -236,7 +236,7 @@ if ( ! class_exists( 'BJLL' ) ) {
 			) );
 		}
 		
-		function options_init() {
+		static function options_init() {
 		
 			$options = self::_get_options();
 
