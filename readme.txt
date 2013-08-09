@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 0.6.2
+Tested up to: 3.6
+Stable tag: 0.6.10
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -22,6 +22,7 @@ Non-javascript visitors gets the original element in noscript.
 * Automaticly serve scaled down images in responsive designs
 * Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
 
+Please let me know if you have any issues. Fastest way to get a response is by Twitter: http://twitter.com/bjornjohansen
 
 == Installation ==
 1. Download and unzip plugin
@@ -58,6 +59,35 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.10 =
+* Responsive and HiDPI images works with MultiSite subfolders
+* Lazy loading is disabled on Opera Mini
+* Removed leftin print_filters_for() function (sry)
+* User definable threshold
+
+= Version 0.6.9 =
+* Bugfix: Single quotes for the class attribute is now handled (thanks @kReEsTaL)
+* Bugfix: Removed strict error notice (thanks syndrael)
+
+= Version 0.6.8 =
+* Bugfix: sonar.js wouldn't load properly when SCRIPT_DEBUG was set to true (thanks @techawakening)
+
+= Version 0.6.7 =
+* Combined JS files for faster loading
+* Bugfix for when viewport is resized – now triggering scroll event (thanks kReEsTaL)
+
+= Version 0.6.6 =
+* Option to disable BJ Lazy Load for MobilePress
+
+= Version 0.6.5 =
+* Iframe lazy loading is now compatible with Gravity Forms' ajax forms.
+
+= Version 0.6.4 =
+* Disable when viewing printable page from WP-Print
+
+= Version 0.6.3 =
+* Detects WPTouch Pro as well
 
 = Version 0.6.2 =
 * Bugfix: Remove notice of undefined constant when SCRIPT_DEBUG isn't defined
@@ -141,6 +171,27 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.6.10 =
+Works with Opera Mini
+
+= 0.6.9 =
+Bugfix release
+
+= 0.6.8 =
+Bugfix: Works with SCRIPT_DEBUG
+
+= 0.6.7 =
+Faster loading and bugfix
+
+= 0.6.6 =
+MobilePress compatible
+
+= 0.6.5 =
+Improved compability with Gravity Forms
+
+= 0.6.4 =
+Disable when viewing printable page from WP-Print
 
 = 0.6.0 =
 Image size adaption. Infinite scroll & WPTouch fixes.

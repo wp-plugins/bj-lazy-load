@@ -5,7 +5,13 @@ var BJLL = BJLL || {};
 
 	function bj_lazy_load_init() {
 		
-		$('.lazy-hidden').not('.data-lazy-ready').one( 'scrollin.bj_lazy_load', { distance: 200 }, function() {
+		var threshold = 200;
+
+		if ( 'undefined' != typeof ( BJLL.threshold ) ) {
+			threshold = parseInt( BJLL.threshold );
+		}
+
+		$('.lazy-hidden').not('.data-lazy-ready').one( 'scrollin.bj_lazy_load', { distance: threshold }, function() {
 
 			var $el = $( this ),
 				data_lazy_type = $el.attr( 'data-lazy-type' );
@@ -23,7 +29,11 @@ var BJLL = BJLL || {};
 						if ( window.devicePixelRatio > 1 && BJLL.load_hidpi == 'yes' ) {
 							loadimgwidth = Math.ceil( window.devicePixelRatio * loadimgwidth );
 						}
-						imgurl = BJLL.thumb_base + escape( $el.attr( 'data-lazy-src' ) ) + '&w=' + loadimgwidth;
+						var srcimgurl = $el.attr( 'data-lazy-src' );
+						if ( 'undefined' != typeof ( BJLL.site_url ) && 'undefined' != typeof ( BJLL.network_site_url ) ) {
+							srcimgurl = srcimgurl.replace( BJLL.site_url, BJLL.network_site_url );
+						}
+						imgurl = BJLL.thumb_base + escape( srcimgurl ) + '&w=' + loadimgwidth;
 					}
 
 				}
@@ -103,5 +113,6 @@ var BJLL = BJLL || {};
 	if ( BJLL.infinite_scroll == 'yes' ) {
 		$( window ).bind( 'scroll', bj_lazy_load_init ); // using .on is more efficient, but requires jQuery 1.7
 	}
+	$(window).on("resize", function() { $(document).trigger("scroll"); });
 	
 })(jQuery);

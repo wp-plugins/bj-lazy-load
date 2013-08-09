@@ -60,6 +60,12 @@ class BJLL_Admin_Page extends scbAdminPage {
 				'type' => 'text',
 				'name' => 'skip_classes',
 				'desc' => sprintf( '<p class="description">%s</p>', __( 'Comma separated. Example: "no-lazy, lazy-ignore, image-235"', 'bj_lazy_load' ) ),
+			),
+			array(
+				'title' => __( 'Threshold', 'bj_lazy_load' ),
+				'type' => 'text',
+				'name' => 'threshold',
+				'desc' => sprintf( '<p class="description">%s</p>', __( 'How close to the viewport the element should be when we load it. In pixels. Example: 200', 'bj_lazy_load' ) ),
 			)
 		);
 
@@ -88,13 +94,23 @@ class BJLL_Admin_Page extends scbAdminPage {
 		);
 
 
-		if ( function_exists( 'bnc_wptouch_is_mobile' ) ) {
+		if ( BJLL::has_wptouch() ) {
 			$optionfields[] = array(
 				'title' => __( 'Disable on WPTouch', 'bj_lazy_load' ),
 				'type' => 'radio',
 				'name' => 'disable_on_wptouch',
 				'value' => array( 'yes' => __( 'Yes', 'bj_lazy_load' ), 'no' => __( 'No', 'bj_lazy_load' ) ),
 				'desc' => sprintf( '<p class="description">%s</p>', __( 'Disables BJ Lazy Load when the WPTouch mobile theme is used', 'bj_lazy_load' ) ),
+			);
+		}
+
+		if ( BJLL::has_mobilepress() ) {
+			$optionfields[] = array(
+				'title' => __( 'Disable on MobilePress', 'bj_lazy_load' ),
+				'type' => 'radio',
+				'name' => 'disable_on_mobilepress',
+				'value' => array( 'yes' => __( 'Yes', 'bj_lazy_load' ), 'no' => __( 'No', 'bj_lazy_load' ) ),
+				'desc' => sprintf( '<p class="description">%s</p>', __( 'Disables BJ Lazy Load when the MobilePress mobile theme is used', 'bj_lazy_load' ) ),
 			);
 		}
 

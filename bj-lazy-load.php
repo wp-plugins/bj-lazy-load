@@ -3,12 +3,12 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.2
+Version: 0.6.10
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
 
-    Copyright 2011–2012  Bjørn Johansen  (email : post@bjornjohansen.no)
+    Copyright 2011–2013  Bjørn Johansen  (email : post@bjornjohansen.no)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -25,24 +25,36 @@ License: GPL2
 
 */
 
-
 require_once( dirname(__FILE__) . '/scb/load.php' );
 
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.2';
+		const version = '0.6.10';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
 		protected static $_instance;
 
 		function __construct() {
-		
+
+			// Disable when viewing printable page from WP-Print
+			if ( intval( get_query_var( 'print' ) ) == 1 || intval( get_query_var( 'printpage' ) ) == 1 ) {
+				return;
+			}
+			
+			// Disable on Opera Mini
+			if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Opera Mini' ) !== false ) {
+				return;
+			}
 			
 			$options = self::_get_options();
 
-			if ( 'yes' == $options->get( 'disable_on_wptouch' ) && function_exists( 'bnc_wptouch_is_mobile' ) && bnc_wptouch_is_mobile()  ) {
+			if ( 'yes' == $options->get( 'disable_on_wptouch' ) && self::is_wptouch() ) {
+				return;
+			}
+
+			if ( 'yes' == $options->get( 'disable_on_mobilepress' ) && self::is_mobilepress() ) {
 				return;
 			}
 
@@ -88,12 +100,13 @@ if ( ! class_exists( 'BJLL' ) ) {
 				$in_footer = false;
 			}
 
-			wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
+			
 
 			if ( defined( 'SCRIPT_DEBUG') && SCRIPT_DEBUG ) {
+				wp_enqueue_script( 'jquery.sonar', plugins_url( '/js/jquery.sonar.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
 			} else {
-				wp_enqueue_script( 'BJLL', plugins_url( '/js/bj-lazy-load.min.js', __FILE__ ), array( 'jquery', 'jquery.sonar' ), self::version, $in_footer );
+				wp_enqueue_script( 'BJLL', plugins_url( '/js/combined.min.js', __FILE__ ), array( 'jquery' ), self::version, $in_footer );
 			}
 
 			$bjll_options = array();
@@ -102,10 +115,19 @@ if ( ! class_exists( 'BJLL' ) ) {
 				$bjll_options['thumb_base'] = plugins_url( '/thumb.php', __FILE__ ) . '?src=';
 				$bjll_options['load_hidpi'] = $options->get('load_hidpi');
 				$bjll_options['load_responsive'] = $options->get('load_responsive');
+
+				if ( is_multisite() ) {
+					$bjll_options['site_url'] = get_site_url();
+					$bjll_options['network_site_url'] = network_site_url();
+				}
 			}
 
 			if ( $options->get('infinite_scroll') == 'yes' ) {
 				$bjll_options['infinite_scroll'] = $options->get('infinite_scroll');
+			}
+
+			if ( intval( $options->get('threshold') ) != 200 ) {
+				$bjll_options['threshold'] = intval( $options->get('threshold') );
 			}
 			
 
@@ -153,8 +175,8 @@ if ( ! class_exists( 'BJLL' ) ) {
 					$replaceHTML = preg_replace( '/<img(.*?)src=/i', '<img$1src="' . $this->_placeholder_url . '" data-lazy-type="image" data-lazy-src=', $imgHTML );
 					
 					// add the lazy class to the img element
-					if ( preg_match( '/class="/i', $replaceHTML ) ) {
-						$replaceHTML = preg_replace( '/class="(.*?)"/i', 'class="lazy lazy-hidden $1"', $replaceHTML );
+					if ( preg_match( '/class=["\']/i', $replaceHTML ) ) {
+						$replaceHTML = preg_replace( '/class=(["\'])(.*?)["\']/i', 'class=$1lazy lazy-hidden $2$1', $replaceHTML );
 					} else {
 						$replaceHTML = preg_replace( '/<img/i', '<img class="lazy lazy-hidden"', $replaceHTML );
 					}
@@ -181,6 +203,12 @@ if ( ! class_exists( 'BJLL' ) ) {
 			$replace = array();
 			
 			foreach ( $matches[0] as $iframeHTML ) {
+
+				// Don't mess with the Gravity Forms ajax iframe
+				if ( strpos( $iframeHTML, 'gform_ajax_frame' ) ) {
+					continue;
+				}
+
 				$replaceHTML = '<img src="' . $this->_placeholder_url . '"  class="lazy lazy-hidden" data-lazy-type="iframe" data-lazy-src="' . base64_encode($iframeHTML) . '" alt="">';
 				
 				$replaceHTML .= '<noscript>' . $iframeHTML . '</noscript>';
@@ -194,7 +222,7 @@ if ( ! class_exists( 'BJLL' ) ) {
 			return $content;
 		}
 		
-		protected function _get_options() {
+		protected static function _get_options() {
 			return new scbOptions( 'bj_lazy_load_options', __FILE__, array(
 				'filter_content'          => 'yes',
 				'filter_post_thumbnails'  => 'yes',
@@ -206,12 +234,14 @@ if ( ! class_exists( 'BJLL' ) ) {
 				'skip_classes'            => '',
 				'load_hidpi'              => 'no',
 				'load_responsive'         => 'no',
-				'disable_on_wptouch'      => 'no',
-				'infinite_scroll'         => 'no'
+				'disable_on_wptouch'      => 'yes',
+				'disable_on_mobilepress'  => 'yes',
+				'infinite_scroll'         => 'no',
+				'threshold'               => '200'
 			) );
 		}
 		
-		function options_init() {
+		static function options_init() {
 		
 			$options = self::_get_options();
 
@@ -220,6 +250,48 @@ if ( ! class_exists( 'BJLL' ) ) {
 				require_once( dirname( __FILE__ ) . '/admin.php' );
 				new BJLL_Admin_Page( __FILE__, $options );
 			}
+		}
+
+		static function is_wptouch() {
+			if ( function_exists( 'bnc_wptouch_is_mobile' ) && bnc_wptouch_is_mobile() ) {
+				return true;
+			}
+
+			global $wptouch_pro;
+
+			if ( defined( 'WPTOUCH_VERSION' ) || is_object( $wptouch_pro ) ) {
+				
+				if ( $wptouch_pro->showing_mobile_theme ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		static function has_wptouch() {
+			if ( function_exists( 'bnc_wptouch_is_mobile' ) || defined( 'WPTOUCH_VERSION' ) ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		static function is_mobilepress() {
+
+			if ( function_exists( 'mopr_get_option' ) && WP_CONTENT_DIR . mopr_get_option( 'mobile_theme_root', 1 ) == get_theme_root() ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		static function has_mobilepress() {
+			if ( class_exists( 'Mobilepress_core' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 		
 	}
