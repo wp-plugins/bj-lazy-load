@@ -5,7 +5,7 @@ Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, 
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 0.6.9
+Stable tag: 0.6.10
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -59,6 +59,12 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.6.10 =
+* Responsive and HiDPI images works with MultiSite subfolders
+* Lazy loading is disabled on Opera Mini
+* Removed leftin print_filters_for() function (sry)
+* User definable threshold
 
 = Version 0.6.9 =
 * Bugfix: Single quotes for the class attribute is now handled (thanks @kReEsTaL)
@@ -165,6 +171,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.6.10 =
+Works with Opera Mini
 
 = 0.6.9 =
 Bugfix release

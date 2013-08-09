@@ -60,6 +60,12 @@ class BJLL_Admin_Page extends scbAdminPage {
 				'type' => 'text',
 				'name' => 'skip_classes',
 				'desc' => sprintf( '<p class="description">%s</p>', __( 'Comma separated. Example: "no-lazy, lazy-ignore, image-235"', 'bj_lazy_load' ) ),
+			),
+			array(
+				'title' => __( 'Threshold', 'bj_lazy_load' ),
+				'type' => 'text',
+				'name' => 'threshold',
+				'desc' => sprintf( '<p class="description">%s</p>', __( 'How close to the viewport the element should be when we load it. In pixels. Example: 200', 'bj_lazy_load' ) ),
 			)
 		);
 

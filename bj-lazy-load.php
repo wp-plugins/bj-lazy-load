@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.6.9
+Version: 0.6.10
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 License: GPL2
@@ -25,22 +25,12 @@ License: GPL2
 
 */
 
-function print_filters_for( $hook = '' ) {
-    global $wp_filter;
-    if( empty( $hook ) || !isset( $wp_filter[$hook] ) )
-        return;
-
-    print '<pre>';
-    print_r( $wp_filter[$hook] );
-    print '</pre>';
-}
-
 require_once( dirname(__FILE__) . '/scb/load.php' );
 
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.6.8';
+		const version = '0.6.10';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -50,6 +40,11 @@ if ( ! class_exists( 'BJLL' ) ) {
 
 			// Disable when viewing printable page from WP-Print
 			if ( intval( get_query_var( 'print' ) ) == 1 || intval( get_query_var( 'printpage' ) ) == 1 ) {
+				return;
+			}
+			
+			// Disable on Opera Mini
+			if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Opera Mini' ) !== false ) {
 				return;
 			}
 			
@@ -120,10 +115,19 @@ if ( ! class_exists( 'BJLL' ) ) {
 				$bjll_options['thumb_base'] = plugins_url( '/thumb.php', __FILE__ ) . '?src=';
 				$bjll_options['load_hidpi'] = $options->get('load_hidpi');
 				$bjll_options['load_responsive'] = $options->get('load_responsive');
+
+				if ( is_multisite() ) {
+					$bjll_options['site_url'] = get_site_url();
+					$bjll_options['network_site_url'] = network_site_url();
+				}
 			}
 
 			if ( $options->get('infinite_scroll') == 'yes' ) {
 				$bjll_options['infinite_scroll'] = $options->get('infinite_scroll');
+			}
+
+			if ( intval( $options->get('threshold') ) != 200 ) {
+				$bjll_options['threshold'] = intval( $options->get('threshold') );
 			}
 			
 
@@ -232,7 +236,8 @@ if ( ! class_exists( 'BJLL' ) ) {
 				'load_responsive'         => 'no',
 				'disable_on_wptouch'      => 'yes',
 				'disable_on_mobilepress'  => 'yes',
-				'infinite_scroll'         => 'no'
+				'infinite_scroll'         => 'no',
+				'threshold'               => '200'
 			) );
 		}
 		
