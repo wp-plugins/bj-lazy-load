@@ -34,7 +34,7 @@ if ( ! class_exists( 'BJLL_Skip_Post' ) ) {
 			$post_types = get_post_types( array( 'public' => true ), 'names' ); 
 
 			foreach ( $post_types as $post_type ) {
-				add_meta_box( 'bj_lazy_load_skip_post', __( 'Lazy Loading', 'bj_lazy_load' ), array( $this, 'bj_lazy_load_skip_post_meta_box' ), $post_type, 'side', 'low' );
+				add_meta_box( 'bj_lazy_load_skip_post', __( 'Lazy Loading', 'bj-lazy-load' ), array( $this, 'bj_lazy_load_skip_post_meta_box' ), $post_type, 'side', 'low' );
 			}
 		}
 
@@ -47,7 +47,7 @@ if ( ! class_exists( 'BJLL_Skip_Post' ) ) {
 
 			printf(
 				'<label for="bj_lazy_load_skip_post_value"> %s</label>',
-				$post->post_type == 'page' ? __( 'Skip lazy loading for this page', 'bj_lazy_load' ) : __( 'Skip lazy loading for this post', 'bj_lazy_load' )
+				$post->post_type == 'page' ? __( 'Skip lazy loading for this page', 'bj-lazy-load' ) : __( 'Skip lazy loading for this post', 'bj-lazy-load' )
 			);
 
 		}

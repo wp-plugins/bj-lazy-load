@@ -6,7 +6,7 @@ Description: Lazy image loading makes your site load faster and saves bandwidth.
 Version: 0.7.0
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
-Text Domain: bj_lazy_load
+Text Domain: bj-lazy-load
 License: GPL2
 
     Copyright 2011–2013  Bjørn Johansen  (email : post@bjornjohansen.no)
@@ -27,6 +27,7 @@ License: GPL2
 */
 
 require_once( dirname(__FILE__) . '/scb/load.php' );
+require_once( dirname(__FILE__) . '/inc/lang.php' );
 require_once( dirname(__FILE__) . '/inc/class-bjll-skip-post.php' );
 
 if ( ! class_exists( 'BJLL' ) ) {
@@ -60,7 +61,6 @@ if ( ! class_exists( 'BJLL' ) ) {
 				return;
 			}
 
-			add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_filter( 'bj_lazy_load_html', array( __CLASS__, 'filter' ), 10, 1 );
 			
@@ -92,10 +92,6 @@ if ( ! class_exists( 'BJLL' ) ) {
 				self::$_instance = new $className;
 			}
 			return self::$_instance;
-		}
-
-		public function load_plugin_textdomain() {
-			load_plugin_textdomain( 'bj_lazy_load', false, basename( dirname( __FILE__ ) ) . '/lang' );
 		}
 		
 		static function enqueue_scripts() {
