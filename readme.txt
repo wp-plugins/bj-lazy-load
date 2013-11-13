@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.5
-Stable tag: 0.6.10
+Stable tag: 0.7.0
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -67,6 +67,8 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * Added a proper WordPress filter method for arbitrary HTML filtering with: apply_filters( 'bj_lazy_load_html', $html )
 * Updated scbFramework to release 58 (no more strict warnings in admin)
 * Updated jQuery.sonar to latest version (as of 2013-11-13)
+* Added POT file (Go translate!)
+* Added translation to Norwegian Bokmål
 
 = Version 0.6.10 =
 * Responsive and HiDPI images works with MultiSite subfolders
