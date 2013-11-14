@@ -68,7 +68,8 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * Updated scbFramework to release 58 (no more strict warnings in admin)
 * Updated jQuery.sonar to latest version (as of 2013-11-13)
 * Added POT file (Go translate!)
-* Added translation to Norwegian Bokmål
+* Added translation to Norwegian Bokmål (nb_NO)
+* Added translation to Russian (ru_RU) by Elvisrk
 
 = Version 0.6.10 =
 * Responsive and HiDPI images works with MultiSite subfolders
