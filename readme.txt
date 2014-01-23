@@ -4,7 +4,7 @@ Donate link: http://www.kiva.org/
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.5
-Stable tag: 0.7.1
+Stable tag: 0.8
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -18,10 +18,12 @@ You can also lazy load other images and iframes in your theme, by using a simple
 Non-javascript visitors gets the original element in noscript.
 
 = Size optimized images =
-* Automaticly serve scaled down images in responsive designs
-* Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
+* Automaticly serve scaled down images in responsive designs (experimental)
+* Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display) (experimental)
 
-Please let me know if you have any issues. Fastest way to get a response is by Twitter: http://twitter.com/bjornjohansen
+Please let me know if you have any issues. Fastest way to get a response is by Twitter: https://twitter.com/bjornjohansen
+
+See more performance tips on https://bjornjohansen.no/
 
 == Installation ==
 1. Download and unzip plugin
@@ -51,7 +53,7 @@ The included JavaScript is tested in Firefox 2+, Safari 3+, Opera 9+, Chrome 5+,
 = I'm using a CDN. Will this plugin interfere? =
 Lazy loading works just fine. The images will still load from your CDN.
 
-As of version 0.6.0, serving responsive and hiDPI images will not work if you're using a CDN. Pull zones will be supported in the near future.
+As of version 0.7.1, serving responsive and hiDPI images will not work if you're using a CDN. Pull zones will be supported in the near future.
 
 = The plugin doesn't work/doesn't replace my images =
 Probably, your theme does not call wp_footer(). Edit the plugin settings to load in wp_head() instead.
@@ -60,6 +62,10 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.8 =
+* Replaced TimThumb with WP_Image_Editor
+* Cached images are now properly stored in wp-content/uploads folder
 
 = Version 0.7.1 =
 * Proper encoding of non-ASCII characters in filenames when using responsive or hiDPI images (thanks @testsiteoop)

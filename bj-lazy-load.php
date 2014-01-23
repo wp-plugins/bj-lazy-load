@@ -3,7 +3,7 @@
 Plugin Name: BJ Lazy Load
 Plugin URI: http://wordpress.org/extend/plugins/bj-lazy-load/
 Description: Lazy image loading makes your site load faster and saves bandwidth.
-Version: 0.7.1
+Version: 0.8
 Author: Bjørn Johansen
 Author URI: http://twitter.com/bjornjohansen
 Text Domain: bj-lazy-load
@@ -29,11 +29,12 @@ License: GPL2
 require_once( dirname(__FILE__) . '/scb/load.php' );
 require_once( dirname(__FILE__) . '/inc/lang.php' );
 require_once( dirname(__FILE__) . '/inc/class-bjll-skip-post.php' );
+require_once( dirname(__FILE__) . '/inc/class-bjll-image-resizer.php' );
 
 if ( ! class_exists( 'BJLL' ) ) {
 	class BJLL {
 
-		const version = '0.7.1';
+		const version = '0.8';
 		protected $_placeholder_url;
 		protected $_skip_classes;
 		
@@ -117,7 +118,8 @@ if ( ! class_exists( 'BJLL' ) ) {
 			$bjll_options = array();
 
 			if ( $options->get('load_hidpi') == 'yes' || $options->get('load_responsive') == 'yes' ) {
-				$bjll_options['thumb_base'] = plugins_url( '/thumb.php', __FILE__ ) . '?src=';
+				//$bjll_options['thumb_base'] = plugins_url( '/thumb.php', __FILE__ ) . '?src=';
+				$bjll_options['thumb_base'] = add_query_arg( array( 'bjll' => 'image', 'img' => '' ), home_url() . '/' ) . '=';
 				$bjll_options['load_hidpi'] = $options->get('load_hidpi');
 				$bjll_options['load_responsive'] = $options->get('load_responsive');
 
