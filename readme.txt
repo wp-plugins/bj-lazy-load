@@ -1,11 +1,10 @@
 === BJ Lazy Load ===
 Contributors: bjornjohansen
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NLUWR4SHCJRBJ
+Donate link: http://www.kiva.org/
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 0.6.10
+Requires at least: 3.5
+Stable tag: 0.8
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
@@ -19,10 +18,12 @@ You can also lazy load other images and iframes in your theme, by using a simple
 Non-javascript visitors gets the original element in noscript.
 
 = Size optimized images =
-* Automaticly serve scaled down images in responsive designs
-* Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
+* Automaticly serve scaled down images in responsive designs (experimental)
+* Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display) (experimental)
 
-Please let me know if you have any issues. Fastest way to get a response is by Twitter: http://twitter.com/bjornjohansen
+Please let me know if you have any issues. Fastest way to get a response is by Twitter: https://twitter.com/bjornjohansen
+
+See more performance tips on https://bjornjohansen.no/
 
 == Installation ==
 1. Download and unzip plugin
@@ -30,14 +31,16 @@ Please let me know if you have any issues. Fastest way to get a response is by T
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Optional usage ==
-If you have images output in custom templates or want to lazy load other images in your theme, you may filter the HTML through BJLL::filter():
+If you have images output in custom templates or want to lazy load other images in your theme, you may pass the HTML through a filter:
+
 `<?php
-$img = '<img src="myimage.jpg" alt="">';
-if ( class_exists( 'BJLL' ) ) {
-	$img = BJLL::filter( $img );
-}
-echo $img;
+$img_html = '<img src="myimage.jpg" alt="">';
+$img_html = apply_filters( 'bj_lazy_load_html', $img_html );
+echo $img_html;
 ?>`
+
+Note for developers: The filter has a priority of 10.
+
 
 == Frequently Asked Questions ==
 
@@ -50,7 +53,7 @@ The included JavaScript is tested in Firefox 2+, Safari 3+, Opera 9+, Chrome 5+,
 = I'm using a CDN. Will this plugin interfere? =
 Lazy loading works just fine. The images will still load from your CDN.
 
-As of version 0.6.0, serving responsive and hiDPI images will not work if you're using a CDN. Pull zones will be supported in the near future.
+As of version 0.7.1, serving responsive and hiDPI images will not work if you're using a CDN. Pull zones will be supported in the near future.
 
 = The plugin doesn't work/doesn't replace my images =
 Probably, your theme does not call wp_footer(). Edit the plugin settings to load in wp_head() instead.
@@ -59,6 +62,23 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.8 =
+* Replaced TimThumb with WP_Image_Editor
+* Cached images are now properly stored in wp-content/uploads folder
+
+= Version 0.7.1 =
+* Proper encoding of non-ASCII characters in filenames when using responsive or hiDPI images (thanks @testsiteoop)
+
+= Version 0.7.0 =
+* Added meta box to all public post types to exclude BJ Lazy Load for individual posts/pages
+* Placeholder image is replaced with a really short data-uri (thanks @jruizcantero)
+* Added a proper WordPress filter method for arbitrary HTML filtering with: apply_filters( 'bj_lazy_load_html', $html )
+* Updated scbFramework to release 58 (no more strict warnings in admin)
+* Updated jQuery.sonar to latest version (as of 2013-11-13)
+* Added POT file (Go translate!)
+* Added translation to Norwegian Bokmål (nb_NO)
+* Added translation to Russian (ru_RU) by Elvisrk
 
 = Version 0.6.10 =
 * Responsive and HiDPI images works with MultiSite subfolders
@@ -75,7 +95,7 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 
 = Version 0.6.7 =
 * Combined JS files for faster loading
-* Bugfix for when viewport is resized – now triggering scroll event (thanks kReEsTaL)
+* Bugfix for when viewport is resized – now triggering scroll event (thanks @kReEsTaL)
 
 = Version 0.6.6 =
 * Option to disable BJ Lazy Load for MobilePress
