@@ -4,7 +4,7 @@ Donate link: http://www.kiva.org/
 Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, bandwidth, responsive design, hidpi, retina
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.5
-Stable tag: 0.8
+Stable tag: 0.7.1
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
