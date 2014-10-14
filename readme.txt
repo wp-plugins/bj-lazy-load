@@ -5,14 +5,14 @@ Tags: images, iframes, lazy loading, jquery, javascript, optimize, performance, 
 Author URI: http://twitter.com/bjornjohansen
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 0.7.3
+Stable tag: 0.7.5
 
 Lazy loading makes your site load faster and saves bandwidth. Uses jQuery and degrades gracefully for non-js users. Works with both images and iframes.
 
 == Description ==
 Lazy loading makes your site load faster and saves bandwidth.
 
-This plugin replaces all your post images, post thumbnails, gravatar images and content iframes with a placeholder and loads the content as it gets close to enter the browser window when the visitor scrolls the page.
+This plugin replaces all your post images, post thumbnails, gravatar images and content iframes with a placeholder and loads the content as it gets close to enter the browser window when the visitor scrolls the page. Also works with text widgets.
 
 You can also lazy load other images and iframes in your theme, by using a simple function.
 
@@ -61,6 +61,12 @@ Probably, your theme does not call wp_footer(). Edit the plugin settings to load
 Check your HTML source or see the magic at work in Web Inspector, FireBug or similar.
 
 == Changelog ==
+
+= Version 0.7.5 =
+* Also applies to text widgets (Thanks to Sigurður Guðbrandsson)
+
+= Version 0.7.4 =
+* Skips lazy loading of data-URIs
 
 = Version 0.7.3 =
 * Works with newlines in the HTML string for the IMG element
@@ -192,6 +198,9 @@ Check your HTML source or see the magic at work in Web Inspector, FireBug or sim
 * It works (or at least it does for me)
 
 == Upgrade Notice ==
+
+= 0.7.5 =
+Also applies to text widgets
 
 = 0.7.2 =
 Improved minification compability
