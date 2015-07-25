@@ -22,7 +22,12 @@ Non-javascript visitors gets the original element in noscript.
 * Automaticly serve scaled down images in responsive designs
 * Automaticly serve hiDPI images for hiDPI screens (like Apples Retina Display)
 
-Please let me know if you have any issues. Fastest way to get a response is by Twitter: http://twitter.com/bjornjohansen
+Please let me know if you have any issues. Fastest way to get a response is by Twitter: https://twitter.com/bjornjohansen
+
+= Translations =
+* Russian (ru_RU) by Elvisrk
+* Hebrew (he_IL) by Imri Sagive
+* Norwegian Bokmål (nb_NO) by Bjørn Johansen
 
 == Installation ==
 1. Download and unzip plugin
