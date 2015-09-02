@@ -7,14 +7,16 @@ Requires at least: 3.5
 Tested up to: 4.3
 Stable tag: 1.0.2
 
-Lazy loading makes your site load faster and saves bandwidth. Uses no external JS libraries and degrades gracefully for non-js users. Works with both images and iframes (like embedded YouTube videos).
+Lazy loading for images and iframes makes your site load faster and saves bandwidth. Uses no external JS libraries and degrades gracefully for non-js users.
 
 == Description ==
 Lazy loading makes your site load faster and saves bandwidth.
 
 This plugin replaces all your post images, post thumbnails, gravatar images and content iframes with a placeholder and loads the content as it gets close to enter the browser window when the visitor scrolls the page. Also works with text widgets.
 
-You can also lazy load other images and iframes in your theme, by using a simple function.
+Since it works with iframes, it also covers embedded videoes from YouTube, Vimeo etc.
+
+You can also lazy load other images and iframes in your theme, by using a simple filter.
 
 Non-javascript visitors gets the original element in noscript.
 
@@ -26,6 +28,8 @@ Please let me know if you have any issues. Fastest way to get a response is by T
 * Russian (ru_RU) by Elvisrk
 * Hebrew (he_IL) by Imri Sagive
 * Norwegian Bokmål (nb_NO) by Bjørn Johansen
+
+<a href="https://github.com/bjornjohansen/bj-lazy-load">Development happens at GitHub</a>. Pull requests are very welcome.
 
 == Installation ==
 1. Download and unzip plugin
